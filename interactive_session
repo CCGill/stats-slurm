@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# check that some arguments were passed...
+if [[ $# -eq 0 ]]
+then
+  echo "ERROR: arguments required, use option -h or --help for help" 1>&2
+  echo "Exiting"
+  exit 1
+fi
+
+while [[ $# -gt 0 ]]
+do
+        key="$1"
+        case $key in
+                -h|--help )
+                        echo "Usage:"
+                        echo "-s or --server Server to use for interactive session eg -s smew01 will start a job on partition smew01-debug."
+                        echo "-h or --help Display this help message."
+                        echo "Exiting."
+                        exit 0
+                        ;;
+                -s|--server )
+                        servername=$2
+                        echo "Server prefix specified as $servername"
+                        shift 
+                        shift
+                        ;;
+                *)
+                        echo "ERROR: Unknown argument ${key} entered, exiting"
+                        echo "use option -h or --help to see valid options."
+                        exit 1
+        esac
+done
+
+sinfo &> /dev/null # check if this is a slurm server
+if [[ $? -ne 0 ]]
+then
+        echo "sinfo exited with non-zero exit status: this is probably not a slurm head node"
+        echo "check you are logged into a slurm head node"
+        echo "EXITING"
+        exit 1
+fi
+
+
+
+tmp=$(echo ${servername} | grep "\-debug" | wc -l)
+if [[ $tmp -eq 0 ]]
+then
+    echo '"-debug" not detected in servername, appending to end'
+    PART="${servername}-debug"
+else
+    PART=${servername}
+fi
+
+echo "partition specified as: ${PART}"
+
+tmp=$(sinfo | cut -d" " -f1 | grep ${PART} | wc -l)
+if [[ $tmp -gt 0 ]]
+then
+    CMD="srun --pty -t 0:30:00 --partition=${PART} --chdir /data/localhost/not-backed-up/${USER}/ bash"
+else
+    echo "${PART} is not an available partition, run sinfo to view partition status"
+    exit 1
+fi
+
+$CMD
