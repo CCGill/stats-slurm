@@ -8,20 +8,21 @@ then
   exit 1
 fi
 
+# process arguments
 while [[ $# -gt 0 ]]
 do
         key="$1"
         case $key in
                 -h|--help )
                         echo "Usage:"
-                        echo "-s or --server Server to use for interactive session eg -s smew01 will start a job on partition smew01-debug."
+                        echo "-p or --partition Partition to use for interactive session eg -p smew01 will start a job on partition smew01-debug."
                         echo "-h or --help Display this help message."
                         echo "Exiting."
                         exit 0
                         ;;
-                -s|--server )
-                        servername=$2
-                        echo "Server prefix specified as $servername"
+                -p|--partition )
+                        partitionname=$2
+                        echo "partition specified as $partitionname"
                         shift 
                         shift
                         ;;
@@ -32,7 +33,8 @@ do
         esac
 done
 
-sinfo &> /dev/null # check if this is a slurm server
+# check if this is a slurm head node
+sinfo &> /dev/null 
 if [[ $? -ne 0 ]]
 then
         echo "sinfo exited with non-zero exit status: this is probably not a slurm head node"
@@ -41,19 +43,19 @@ then
         exit 1
 fi
 
+# append -debug to partition name if missing.
 
-
-tmp=$(echo ${servername} | grep "\-debug" | wc -l)
+tmp=$(echo ${partitionname} | grep "\-debug" | wc -l)
 if [[ $tmp -eq 0 ]]
 then
-    echo '"-debug" not detected in servername, appending to end'
-    PART="${servername}-debug"
+    echo '"-debug" not detected in partition name, appending to end'
+    PART="${partitionname}-debug"
 else
-    PART=${servername}
+    PART=${partitionname}
 fi
 
 echo "partition specified as: ${PART}"
-
+# if partition is named correctly, try to start 30 minute debug session.
 tmp=$(sinfo | cut -d" " -f1 | grep ${PART} | wc -l)
 if [[ $tmp -gt 0 ]]
 then

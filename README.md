@@ -2,11 +2,11 @@
 Scripts (and possibly notes) for working with the departmental Slurm servers.
 
 `interactive_session` is a script that I keep in my `~/bin/` directory which, crucially, is in my `PATH`.
-It is a very basic script that will start an interactive/debug session on a server of your choice if you
+It is a very basic script that will start an interactive/debug session on a partition of your choice if you
  are logged into a slurm head node.  Example use:
 
 ```
-interactive_session -s <partition_name>
+interactive_session -p <partition_name>
 ```
 This will start a 30 minute (the current departmental limit) debug session in a sensible file location.
 The script will attempt to throw informative errors if, for example, you are not logged into a slurm head node,
