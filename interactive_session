@@ -54,7 +54,7 @@ else
     PART=${partitionname}
 fi
 
-echo "partition specified as: ${PART}"
+#echo "Specifying partition : ${PART}"
 # if partition is named correctly, try to start 30 minute debug session.
 tmp=$(sinfo | cut -d" " -f1 | grep ${PART} | wc -l)
 if [[ $tmp -gt 0 ]]
@@ -64,5 +64,5 @@ else
     echo "${PART} is not an available partition, run sinfo to view partition status"
     exit 1
 fi
-
+echo "Running command: ${CMD}"
 $CMD
