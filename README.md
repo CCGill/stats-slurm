@@ -13,10 +13,13 @@ The script will attempt to throw informative errors if, for example, you are not
  or you enter a <partition_name> which is not recognised.  If you miss the `-debug` suffix then this will be appended for you.
 
 
-# Useful references:
-- [Slurm documentation website](https://slurm.schedmd.com) (from schedmd)
+# Useful Slurm references:
+- [Official Slurm documentation website](https://slurm.schedmd.com) (from schedmd)
   - [schedmd slurm cheatsheet](https://slurm.schedmd.com/pdfs/summary.pdf)
-- 
+- [Princeton Research Computing Slurm Documentation](https://researchcomputing.princeton.edu/support/knowledge-base/slurm)
+- [Arctic University of Norway HPC documentation](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html)
+- [University of Florida Research Computing Help](https://help.rc.ufl.edu/doc/UFRC_Help_and_Documentation)
+
 
 If you're in Oxford's department of statistics, the following link may be useful:
 - [Oxford Statistics internal Slurm documentation](http://internal.stats.ox.ac.uk/it-support/computation/slurm/)
