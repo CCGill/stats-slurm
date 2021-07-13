@@ -1,7 +1,7 @@
 # stats-slurm
 Scripts (and soon, possibly, notes) for working with the departmental Slurm servers.
 
-`interactive_session` is a script that I keep in my `~/bin/` directory which, crucially, is in my `PATH`.
+`interactive_session` is a script that I keep in a directory which is in my `PATH`.
 It is a very basic script that will start an interactive/debug session on a partition of your choice if you
  are logged into a slurm head node.  Example use:
 
